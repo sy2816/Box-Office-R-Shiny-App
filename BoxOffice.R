@@ -45,7 +45,8 @@ movieIds <- substr(urls, start = 13, stop = nchar(urls)-4)
 wwAlltimeTable$movieIds <- movieIds
 
 ####Current year top grosses
-year <- format(Sys.time(), "%Y")
+#year <- format(Sys.time(), "%Y") # no 2018 data yet. 
+year <- 2018
 yearURL <- sprintf("http://www.boxofficemojo.com/yearly/chart/?yr=%s&p=.htm", year)
 yearTableNode <-  read_html(yearURL) %>%
   html_nodes("table")%>%

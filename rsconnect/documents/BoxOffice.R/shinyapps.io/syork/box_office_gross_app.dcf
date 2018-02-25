@@ -1,11 +1,13 @@
 name: box_office_gross_app
 title: Box Office Gross App
+username:
 account: syork
 server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
 appId: 188118
-bundleId: 876168
+bundleId: 1238507
 url: https://syork.shinyapps.io/box_office_gross_app/
-when: 1498011705.1189
+when: 1519521001.8186
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: decay.R
+ignoredFiles: .gitattributes|decay.R|images/Thumbs.db
