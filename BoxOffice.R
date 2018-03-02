@@ -44,9 +44,19 @@ movieIds <- substr(urls, start = 13, stop = nchar(urls)-4)
 
 wwAlltimeTable$movieIds <- movieIds
 
+
+yearListURL <- "http://www.boxofficemojo.com/yearly/"
+
+yearList <- read_html(yearListURL) %>% html_nodes("table") %>% .[[3]] %>% html_table(header = TRUE, trim = TRUE) %>% head(n = 7) %>% .[[1]]
 ####Current year top grosses
 #year <- format(Sys.time(), "%Y") # no 2018 data yet. 
 year <- 2018
+
+#create empty dataframe
+fullMap <- data.frame()
+
+for(year in yearList){
+
 yearURL <- sprintf("http://www.boxofficemojo.com/yearly/chart/?yr=%s&p=.htm", year)
 yearTableNode <-  read_html(yearURL) %>%
   html_nodes("table")%>%
@@ -66,10 +76,18 @@ yearTable <- data.frame(yearTitles, yearMovieID)
 yearTable <- yearTable[-1,]
 colnames(yearTable) <- c("Title", "movieIds")
 
+fullMap <- rbind(fullMap, yearTable)
+
+
+}
+
+# Add top wordwide mapping
 wwMap <- data.frame(wwAlltimeTable$Title, wwAlltimeTable$movieIds)
 colnames(wwMap) <- c("Title", "movieIds")
 
-fullMap <- rbind(wwMap, yearTable)
+fullMap <- rbind(fullMap, wwMap)
+
+
 fullMap$Title <- as.character(fullMap$Title)
 fullMap$movieIds <- as.character(fullMap$movieIds)
 
