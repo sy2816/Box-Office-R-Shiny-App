@@ -95,6 +95,8 @@ fullMap <- dplyr::arrange(fullMap, Title)
 
 fullMap <- fullMap[!duplicated(fullMap),]
 
+fullMap$Title <- iconv(fullMap$Title , "UTF8", "ASCII", sub="")
+
 #mapStuff <- download_map_data("custom/world-palestine-lowres")
 
 ui <- fluidPage(
@@ -158,6 +160,10 @@ server <- function(input, output, session){
     
     #Clean data
     recieptsTable <- na.omit(recieptsTable)
+    
+    recieptsTable$`Gross-to-Date` <- iconv(recieptsTable$`Gross-to-Date` , "UTF8", "ASCII", sub="")
+    recieptsTable$Gross <- iconv(recieptsTable$Gross , "UTF8", "ASCII", sub="")
+    
     recieptsTable$`Gross-to-Date` <- sub(x = recieptsTable$`Gross-to-Date`, "\\$", replacement = "")
     recieptsTable$`Gross-to-Date` <- gsub(x = recieptsTable$`Gross-to-Date`, ",", replacement = "" )
     recieptsTable$`Gross-to-Date` <- as.numeric(recieptsTable$`Gross-to-Date`)
